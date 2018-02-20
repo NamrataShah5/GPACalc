@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>UC GPA</title>
+        <meta name="description" content="An interactive getting started guide for Brackets.">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <h1>UC GPA Calculator</h1>
+        <img src="http://brandchannel.com/wp-content/uploads/2012/12/univ_calif_old_logo_460x460.jpg" alt="Let There Be Light" style
+             ="position:absolute;width:100px;height;100px;top:3px;left:700px">
+        <h2>This is your guide!</h2>
+        <p> Fill out everything below to get started!
+        </p>
+        
+        <form id="CALC">
+        
+         Current GPA:<br>
+         <input type="number" step= "0.1" id="curGPA"><br>
+          GPA you want:<br>
+          <input type="number" step= "0.1" id="desGPA">
+            <br>Units you have:<br>
+            <input type = "number" step="0.1"  id="curUnits">
+            <br>Units you'll be taking:<br>
+            <input type = "number" step="0.1" id="futUnits"><br>
+            Number of quarters for units: <br>
+            <input type = "number" id="numQuarters">
+            <br>
+            
+            <button onclick="return calculate()">Submit</button>
+            <p>GPA you need:</p>
+            <p id="reqGPA"></p>
+          </form>
+    
+          
+        
+         <form id="UNITS">
+        
+         Current GPA:<br>
+         <input type="number" step= "0.01" id="cur"><br>
+          GPA you want:<br>
+          <input type="number" step= "0.01" id="des">
+            <br>Units you have:<br>
+            <input type = "number" step="0.1"  id="curU">
+             <br>GPA you'll need<br>
+            <input type = "number" step="0.01"  id="fut">
+            <br>
+            
+            <button onclick="return getUnits()">Go!</button>
+             <p>Units needed:</p>
+             <p type="number" id="units"></p>
+          </form>
+        
+        
+        <script type="text/javascript">
+        function calculate() {
+            var x = document.getElementById("CALC");
+            var curGPA = x.elements[0].value;
+            var desGPA = x.elements[1].value;
+            var curUnits = x.elements[2].value;
+            var futUnits = x.elements[3].value;
+            var numQuarters = x.elements[4].value;
+            if(curGPA>4.0 || curGPA<0 || desGPA>4.0 || desGPA<0) {
+                var invalid = "Invalid entry. Please make sure your entries are on the 4.0 scale."
+                 document.getElementById("reqGPA").innerHTML=invalid;
+                 return false;
+            }
+           
+            else {
+            
+            var add = (curUnits*1)+(futUnits*numQuarters);
+            var rGPA=((desGPA*(add)) - (curGPA*curUnits))/(futUnits*numQuarters);
+            rGPA= Number(Math.round(rGPA+'e2')+'e-2');
+            if(rGPA>4.0) {
+                var np = "Sorry, this is not possible."
+                document.getElementById("reqGPA").innerHTML=np;
+                 return false;
+           } 
+            else {
+                
+                document.getElementById("reqGPA").innerHTML=rGPA*1;
+           
+                return false;
+            }
+            } 
+        }
+             function getUnits() {
+            var x = document.getElementById("UNITS");
+            var cur = x.elements[0].value;
+            var des = x.elements[1].value;
+            var curU = x.elements[2].value;
+            var fut = x.elements[3].value;
+            if(cur>4.0 || cur<0 || des >4.0 || des<0 || fut>4.0 || fut<0) {
+                var inv = "Invalid entry. Please make sure your entries are on the 4.0 scale."
+             
+                document.getElementById("units").innerHTML=inv;
+                 return false;
+            }
+            else {
+            var diff = (1*des)-(1*cur);
+            var diff2=(fut*1)-(des*1);
+            var rUnits=(diff*curU)/diff2;
+            rUnits= Math.ceil(rUnits);
+            if(rUnits<5) {
+                var no = "Sorry, this is not possible."
+   
+                document.getElementById("units").innerHTML=no;
+                 return false;
+            }
+            else {
+                document.getElementById("units").innerHTML=rUnits*1;
+                return false;
+                
+            }
+            }
+               
+           
+        }
+             
+            
+        </script>   
+        
+    </body>
+</html>
+
+
